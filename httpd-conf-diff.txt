@@ -1,0 +1,69 @@
+--- original/httpd.conf	2011-01-13 17:08:20.000000000 +0100
++++ httpd.conf	2011-01-25 07:53:43.000000000 +0100
+@@ -114,6 +114,7 @@
+ LoadModule userdir_module modules/mod_userdir.so
+ LoadModule alias_module modules/mod_alias.so
+ LoadModule rewrite_module modules/mod_rewrite.so
++LoadModule php5_module        modules/libphp5.so
+ 
+ <IfModule !mpm_netware_module>
+ <IfModule !mpm_winnt_module>
+@@ -125,8 +126,8 @@
+ # It is usually good practice to create a dedicated user and group for
+ # running httpd, as with most system services.
+ #
+-User www
+-Group www
++User fred
++Group fred
+ 
+ </IfModule>
+ </IfModule>
+@@ -226,7 +227,7 @@
+ # is requested.
+ #
+ <IfModule dir_module>
+-    DirectoryIndex index.html
++    DirectoryIndex index.php
+ </IfModule>
+ 
+ #
+@@ -256,7 +257,7 @@
+ # logged here.  If you *do* define an error logfile for a <VirtualHost>
+ # container, that host's errors will be logged there and not here.
+ #
+-ErrorLog "logs/error_log"
++ErrorLog "|/opt/local/sbin/cronolog -H /opt/local/apache2/logs/error_log /opt/local/apache2/logs/%Y/%m/%d/error.log"
+ 
+ #
+ # LogLevel: Control the number of messages logged to the error_log.
+@@ -285,7 +286,7 @@
+     # define per-<VirtualHost> access logfiles, transactions will be
+     # logged therein and *not* in this file.
+     #
+-    CustomLog "logs/access_log" common
++    CustomLog "|/opt/local/sbin/cronolog -H /opt/local/apache2/logs/access_log /opt/local/apache2/logs/%Y/%m/%d/access.log" common
+ 
+     #
+     # If you prefer a logfile with access, agent, and referer information
+@@ -452,7 +453,7 @@
+ #Include conf/extra/httpd-languages.conf
+ 
+ # User home directories
+-#Include conf/extra/httpd-userdir.conf
++Include conf/extra/httpd-userdir.conf
+ 
+ # Real-time info on requests and configuration
+ #Include conf/extra/httpd-info.conf
+@@ -470,7 +471,10 @@
+ #Include conf/extra/httpd-default.conf
+ 
+ # Secure (SSL/TLS) connections
+-#Include conf/extra/httpd-ssl.conf
++Include conf/extra/httpd-ssl.conf
++
++Include conf/extra/mod_php.conf
++
+ #
+ # Note: The following must must be present to support
+ #       starting without SSL on platforms with no /dev/random equivalent

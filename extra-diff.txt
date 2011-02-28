@@ -1,0 +1,38 @@
+Only in extra: .turd_apache2
+diff -ru original/extra/httpd-ssl.conf extra/httpd-ssl.conf
+--- original/extra/httpd-ssl.conf	2011-01-13 17:08:20.000000000 +0100
++++ extra/httpd-ssl.conf	2011-01-25 07:59:35.000000000 +0100
+@@ -77,8 +77,8 @@
+ DocumentRoot "/opt/local/apache2/htdocs"
+ ServerName www.example.com:443
+ ServerAdmin you@example.com
+-ErrorLog "/opt/local/apache2/logs/error_log"
+-TransferLog "/opt/local/apache2/logs/access_log"
++#ErrorLog "/opt/local/apache2/logs/error_log"
++#TransferLog "/opt/local/apache2/logs/access_log"
+ 
+ #   SSL Engine Switch:
+ #   Enable/Disable SSL for this virtual host.
+@@ -225,7 +225,7 @@
+ #   Per-Server Logging:
+ #   The home of a custom SSL log file. Use this when you want a
+ #   compact non-error SSL logfile on a virtual host basis.
+-CustomLog "/opt/local/apache2/logs/ssl_request_log" \
+-          "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
++#CustomLog "/opt/local/apache2/logs/ssl_request_log" \
++#          "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+ 
+ </VirtualHost>                                  
+diff -ru original/extra/httpd-userdir.conf extra/httpd-userdir.conf
+--- original/extra/httpd-userdir.conf	2011-01-13 17:08:20.000000000 +0100
++++ extra/httpd-userdir.conf	2011-01-14 15:45:50.000000000 +0100
+@@ -14,7 +14,7 @@
+ # for a site where these directories are restricted to read-only.
+ #
+ <Directory "/Users/*/Sites">
+-    AllowOverride FileInfo AuthConfig Limit Indexes
++    AllowOverride FileInfo AuthConfig Limit Indexes Options
+     Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
+     <Limit GET POST OPTIONS>
+         Order allow,deny
+Only in extra: mod_php.conf
