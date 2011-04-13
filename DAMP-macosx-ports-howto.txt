@@ -5,8 +5,10 @@ MySQL
 PHP
 
 # install the following ports with sudo port install <portname>
+# for php5 itself, the command is: php5 +apache2 +pear
+# sudo port install 
 cronolog
-php5 @5.3.5_0+apache2+pear+suhosin
+php5 +apache2 +pear
 php5-apc
 php5-gd
 php5-iconv
@@ -23,12 +25,15 @@ sudo mkdir -p /opt/local/var/db/mysql5
 sudo chown _mysql /opt/local/var/db/mysql5
 sudo mysql_install_db5 # don't set the user as recommended
 
-Then unload mysql and CHOWN again as above
+# Then unload mysql and CHOWN again as above:
+sudo port unload mysql5-server
+sudo chown _mysql /opt/local/var/db/mysql5
+sudo port load mysql5-server
 
 # phpmyadmin setup
 cd /opt/local/apache2/htdocs
 sudo ln -s /opt/local/www/phpmyadmin
-bbedit /opt/local/www/phpmyadmin/config.inc.php # add a blowfish passphrase (can be anything)
+bbedit /opt/local/www/phpmyadmin/config.inc.php # add a blowfish passphrase (can be anything, like glory4meterage)
 
 # Apache/mysql restart
 sudo port unload apache2 && sudo port load apache2
