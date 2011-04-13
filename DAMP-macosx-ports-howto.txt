@@ -5,8 +5,8 @@ MySQL
 PHP
 
 # install the following ports with sudo port install <portname>
-# for php5 itself, the command is: php5 +apache2 +pear
-# sudo port install 
+# for php5 itself, the command is:
+# sudo port install php5 +apache2 +pear
 cronolog
 php5 +apache2 +pear
 php5-apc
