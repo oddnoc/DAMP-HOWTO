@@ -1,4 +1,4 @@
-## DAMP
+# DAMP
 Darwin (Mac OS X)
 Apache
 MySQL
@@ -7,18 +7,18 @@ PHP
 # install the following ports with sudo port install <portname>
 # for php5 itself, the command is:
 # sudo port install php5 +apache2 +pear
-cronolog
-php5 +apache2 +pear
-php5-apc
-php5-gd
-php5-iconv
-php5-mbstring
-php5-mcrypt (for phpmyadmin)
-php5-posix
-php5-tidy
-php5-mysql
-phpmyadmin
-mysql5-server
+	*cronolog
+	*php5 +apache2 +pear
+	*php5-apc
+	*php5-gd
+	*php5-iconv
+	*php5-mbstring
+	*php5-mcrypt (for phpmyadmin)
+	*php5-posix
+	*php5-tidy
+	*php5-mysql
+	*phpmyadmin
+	*mysql5-server
 
 # one-time mysql setup
 sudo mkdir -p /opt/local/var/db/mysql5
