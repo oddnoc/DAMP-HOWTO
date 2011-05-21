@@ -1,5 +1,5 @@
---- original/httpd.conf	2011-01-13 17:08:20.000000000 +0100
-+++ httpd.conf	2011-01-25 07:53:43.000000000 +0100
+--- original/httpd.conf	2011-02-28 11:53:47.000000000 -0800
++++ httpd.conf	2011-05-20 17:15:58.000000000 -0700
 @@ -114,6 +114,7 @@
  LoadModule userdir_module modules/mod_userdir.so
  LoadModule alias_module modules/mod_alias.so
@@ -46,7 +46,7 @@
  
      #
      # If you prefer a logfile with access, agent, and referer information
-@@ -452,7 +453,7 @@
+@@ -452,13 +453,13 @@
  #Include conf/extra/httpd-languages.conf
  
  # User home directories
@@ -55,6 +55,13 @@
  
  # Real-time info on requests and configuration
  #Include conf/extra/httpd-info.conf
+ 
+ # Virtual hosts
+-#Include conf/extra/httpd-vhosts.conf
++Include conf/extra/httpd-vhosts.conf
+ 
+ # Local access to the Apache HTTP Server Manual
+ #Include conf/extra/httpd-manual.conf
 @@ -470,7 +471,10 @@
  #Include conf/extra/httpd-default.conf
  
