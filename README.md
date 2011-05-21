@@ -63,3 +63,6 @@ For php5 itself, the command is:
 ## log files [clear these occasionally; cronolog makes it easier to delete oldies]
 
 * /opt/local/apache2/logs
+
+## Version
+* 0.1 Added TLS support and formatted README as markdown.
