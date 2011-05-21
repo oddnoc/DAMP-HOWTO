@@ -1,19 +1,31 @@
-Only in extra: .turd_apache2
+Only in extra/: .turd_apache2
 diff -ru original/extra/httpd-ssl.conf extra/httpd-ssl.conf
---- original/extra/httpd-ssl.conf	2011-01-13 17:08:20.000000000 +0100
-+++ extra/httpd-ssl.conf	2011-01-25 07:59:35.000000000 +0100
-@@ -77,8 +77,8 @@
- DocumentRoot "/opt/local/apache2/htdocs"
- ServerName www.example.com:443
- ServerAdmin you@example.com
+--- original/extra/httpd-ssl.conf	2011-02-28 11:53:47.000000000 -0800
++++ extra/httpd-ssl.conf	2011-05-20 17:19:57.000000000 -0700
+@@ -71,14 +71,16 @@
+ ## SSL Virtual Host Context
+ ##
+ 
+-<VirtualHost _default_:443>
++<VirtualHost *:443>
+ 
+ #   General setup for the virtual host
+-DocumentRoot "/opt/local/apache2/htdocs"
+-ServerName www.example.com:443
+-ServerAdmin you@example.com
 -ErrorLog "/opt/local/apache2/logs/error_log"
 -TransferLog "/opt/local/apache2/logs/access_log"
++	servername *
++	UseCanonicalName off
++	VirtualDocumentRoot /Users/fred/Sites/%1/
++#ServerName www.example.com:443
++#ServerAdmin you@example.com
 +#ErrorLog "/opt/local/apache2/logs/error_log"
 +#TransferLog "/opt/local/apache2/logs/access_log"
  
  #   SSL Engine Switch:
  #   Enable/Disable SSL for this virtual host.
-@@ -225,7 +225,7 @@
+@@ -225,7 +227,7 @@
  #   Per-Server Logging:
  #   The home of a custom SSL log file. Use this when you want a
  #   compact non-error SSL logfile on a virtual host basis.
@@ -24,8 +36,8 @@ diff -ru original/extra/httpd-ssl.conf extra/httpd-ssl.conf
  
  </VirtualHost>                                  
 diff -ru original/extra/httpd-userdir.conf extra/httpd-userdir.conf
---- original/extra/httpd-userdir.conf	2011-01-13 17:08:20.000000000 +0100
-+++ extra/httpd-userdir.conf	2011-01-14 15:45:50.000000000 +0100
+--- original/extra/httpd-userdir.conf	2011-02-28 11:53:47.000000000 -0800
++++ extra/httpd-userdir.conf	2011-01-14 06:45:50.000000000 -0800
 @@ -14,7 +14,7 @@
  # for a site where these directories are restricted to read-only.
  #
@@ -35,4 +47,57 @@ diff -ru original/extra/httpd-userdir.conf extra/httpd-userdir.conf
      Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
      <Limit GET POST OPTIONS>
          Order allow,deny
-Only in extra: mod_php.conf
+diff -ru original/extra/httpd-vhosts.conf extra/httpd-vhosts.conf
+--- original/extra/httpd-vhosts.conf	2011-02-28 11:53:47.000000000 -0800
++++ extra/httpd-vhosts.conf	2011-05-20 17:19:40.000000000 -0700
+@@ -24,22 +24,31 @@
+ # The first VirtualHost section is used for all requests that do not
+ # match a ServerName or ServerAlias in any <VirtualHost> block.
+ #
+-<VirtualHost *:80>
+-    ServerAdmin webmaster@dummy-host.example.com
+-    DocumentRoot "/opt/local/apache2/docs/dummy-host.example.com"
+-    ServerName dummy-host.example.com
+-    ServerAlias www.dummy-host.example.com
+-    ErrorLog "logs/dummy-host.example.com-error_log"
+-    CustomLog "logs/dummy-host.example.com-access_log" common
+-</VirtualHost>
++#<VirtualHost *:80>
++#    ServerAdmin webmaster@dummy-host.example.com
++#    DocumentRoot "/opt/local/apache2/docs/dummy-host.example.com"
++#    ServerName dummy-host.example.com
++#    ServerAlias www.dummy-host.example.com
++#    ErrorLog "logs/dummy-host.example.com-error_log"
++#    CustomLog "logs/dummy-host.example.com-access_log" common
++#</VirtualHost>
++#
++#<VirtualHost *:80>
++#    ServerAdmin webmaster@dummy-host2.example.com
++#    DocumentRoot "/opt/local/apache2/docs/dummy-host2.example.com"
++#    ServerName dummy-host2.example.com
++#    ErrorLog "logs/dummy-host2.example.com-error_log"
++#    CustomLog "logs/dummy-host2.example.com-access_log" common
++#</VirtualHost>
++#
++#
++#
+ 
+ <VirtualHost *:80>
+-    ServerAdmin webmaster@dummy-host2.example.com
+-    DocumentRoot "/opt/local/apache2/docs/dummy-host2.example.com"
+-    ServerName dummy-host2.example.com
+-    ErrorLog "logs/dummy-host2.example.com-error_log"
+-    CustomLog "logs/dummy-host2.example.com-access_log" common
+-</VirtualHost>
+-
+-
+-
++	servername *
++	UseCanonicalName off
++	VirtualDocumentRoot /Users/fred/Sites/%1/
++	##VirtualScriptAlias  /usr/home/%1/cgi-bin/
++	addDefaultcharset on
++	DirectoryIndex index.php
++</VirtualHost>
+\ No newline at end of file
+Only in extra/: mod_php.conf

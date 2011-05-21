@@ -52,6 +52,13 @@ For php5 itself, the command is:
 
 * /opt/local/apache2/conf
 * see diff files
+* create this file as extra/mod_php.conf
+
+		<IfModule mod_php5.c>
+		AddType  application/x-httpd-php         .php
+		AddType  application/x-httpd-php-source  .phps
+		</IfModule>
+
 
 ## log files [clear these occasionally; cronolog makes it easier to delete oldies]
 
