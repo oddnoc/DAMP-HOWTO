@@ -46,7 +46,7 @@ For php5 itself, the command is:
 
 	cd /opt/local/apache2/htdocs
 	sudo ln -s /opt/local/www/phpmyadmin
-	$EDITOR /opt/local/www/phpmyadmin/config.inc.php # add a blowfish passphrase (can be anything, like glory4meterage)
+	sudo $EDITOR /opt/local/www/phpmyadmin/config.inc.php # add a blowfish passphrase (can be anything, like glory4meterage)
 
 ## Apache/mysql restart
 
@@ -55,6 +55,7 @@ For php5 itself, the command is:
 
 ## Apache config
 
+* `sudo rm /opt/local/apache2/htdocs/index.html`
 * /opt/local/apache2/conf
 * see diff files
 * create this file as extra/mod_php.conf
