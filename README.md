@@ -37,15 +37,10 @@ For php5 itself, the command is:
 
 ## one-time mysql setup
 
-	sudo mkdir -p /opt/local/var/db/mysql5
-	sudo chown _mysql /opt/local/var/db/mysql5
-	sudo mysql_install_db5 # don't set the user as recommended
-
-## Then unload mysql and `chown` again as above:
-
-	sudo port unload mysql5-server
-	sudo chown _mysql /opt/local/var/db/mysql5
+	sudo mysql_install_db5
+	sudo chown -R _mysql /opt/local/var/db/mysql5
 	sudo port load mysql5-server
+	sudo mysql_secure_installation5
 
 ## phpmyadmin setup
 
