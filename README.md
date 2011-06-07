@@ -109,5 +109,6 @@ Clear or delete these occasionally; cronolog makes it easier to delete oldies.
 * /opt/local/apache2/logs
 
 ## Version
-* 0.1 Added TLS support and formatted README as markdown.
+* 0.2.0 Added many details and fixes.
 * 0.1.1  Replaced reference to 'bbedit' with '$EDITOR'
+* 0.1 Added TLS support and formatted README as markdown.
