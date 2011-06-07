@@ -70,7 +70,9 @@ For php5 itself, the command is:
 		</IfModule>
 
 
-## log files [clear these occasionally; cronolog makes it easier to delete oldies]
+## log files
+
+Clear or delete these occasionally; cronolog makes it easier to delete oldies.
 
 * /opt/local/apache2/logs
 
