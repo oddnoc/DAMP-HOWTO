@@ -1,9 +1,18 @@
-# DAMP
+# DAMP for Mac OS X through MacPorts
 
-* Darwin (Mac OS X)
+## What does DAMP stand for?
+
+* Darwin (the open-source part of Mac OS X)
 * Apache
 * MySQL
 * PHP
+
+## Result of executing these instructions
+
+You will end up with all the services you need on your Mac to run PHP
+applications. Any directory you create under your Sites directory will
+correspond to a site: http://_dirname_.lh.fredcondo.net/. In addition, you'll
+have PHPMyAdmin at [http://localhost/phpmyadmin](http://localhost/phpmyadmin).
 
 ## MacPorts
 
@@ -48,7 +57,8 @@ For php5 itself, the command is:
 
 		cd /opt/local/apache2/htdocs
 		sudo ln -s /opt/local/www/phpmyadmin
-1. Set a blowfish passphrase so that cookies work (can be anything, like glory4meterage)
+1. Set a blowfish passphrase so that cookies work (can be anything, like glory4meterage).
+   You may also need to change "localhost" to "127.0.0.1"
 
 		sudo $EDITOR /opt/local/www/phpmyadmin/config.inc.php
 
