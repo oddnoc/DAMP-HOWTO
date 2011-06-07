@@ -41,7 +41,7 @@ For php5 itself, the command is:
 
 	cd /opt/local/apache2/htdocs
 	sudo ln -s /opt/local/www/phpmyadmin
-	bbedit /opt/local/www/phpmyadmin/config.inc.php # add a blowfish passphrase (can be anything, like glory4meterage)
+	$EDITOR /opt/local/www/phpmyadmin/config.inc.php # add a blowfish passphrase (can be anything, like glory4meterage)
 
 ## Apache/mysql restart
 
@@ -66,3 +66,4 @@ For php5 itself, the command is:
 
 ## Version
 * 0.1 Added TLS support and formatted README as markdown.
+* 0.1.1  Replaced reference to 'bbedit' with '$EDITOR'
