@@ -1,9 +1,18 @@
-# DAMP
+# DAMP for Mac OS X through MacPorts
 
-* Darwin (Mac OS X)
+## What does DAMP stand for?
+
+* Darwin (the open-source part of Mac OS X)
 * Apache
 * MySQL
 * PHP
+
+## Result of executing these instructions
+
+You will end up with all the services you need on your Mac to run PHP
+applications. Any directory you create under your Sites directory will
+correspond to a site: http://_dirname_.lh.fredcondo.net/. In addition, you'll
+have PHPMyAdmin at [http://localhost/phpmyadmin](http://localhost/phpmyadmin).
 
 ## MacPorts
 
@@ -23,17 +32,17 @@ For php5 itself, the command is:
 	sudo port install php5 +apache2 +pear
 
 *	cronolog
-*	php5 +apache2 +pear
+*	php5 +apache2 +pear _(lengthy build)_
 *	php5-apc
 *	php5-gd
 *	php5-iconv
 *	php5-mbstring
-*	php5-mcrypt (for phpmyadmin)
+*	php5-mcrypt _(for phpmyadmin)_
 *	php5-posix
 *	php5-tidy
 *	php5-mysql
 *	phpmyadmin
-*	mysql5-server
+*	mysql5-server _(lengthy build)_
 
 ## one-time mysql setup
 
@@ -44,25 +53,53 @@ For php5 itself, the command is:
 
 ## phpmyadmin setup
 
-	cd /opt/local/apache2/htdocs
-	sudo ln -s /opt/local/www/phpmyadmin
-	$EDITOR /opt/local/www/phpmyadmin/config.inc.php # add a blowfish passphrase (can be anything, like glory4meterage)
+1. create a symlink so you can access phpmyadmin
 
-## Apache/mysql restart
+		cd /opt/local/apache2/htdocs
+		sudo ln -s /opt/local/www/phpmyadmin
+1. Set a blowfish passphrase so that cookies work (can be anything, like glory4meterage).
+   You may also need to change "localhost" to "127.0.0.1"
 
-	sudo port unload apache2 && sudo port load apache2
-	sudo port unload mysql5-server && sudo port load mysql5-server
+		sudo $EDITOR /opt/local/www/phpmyadmin/config.inc.php
 
 ## Apache config
 
-* /opt/local/apache2/conf
-* see diff files
-* create this file as extra/mod_php.conf
+1. `sudo rm /opt/local/apache2/htdocs/index.html`
+2. `cd /opt/local/apache2/conf`
+3. see diff files, which you can apply with `patch -p0` _diff-file-name_
+3. Edit httpd.conf, near line 129, to apply your username and group (suggestion: _staff_)
+4. create this file as extra/mod_php.conf
 
 		<IfModule mod_php5.c>
 		AddType  application/x-httpd-php         .php
 		AddType  application/x-httpd-php-source  .phps
 		</IfModule>
+5. _(optional)_ Edit extra/httpd-vhosts.conf (near line 47) to use your own domain.
+
+## SSL/TLS key & certificate
+
+1. Generate a self-signed key & certificate
+
+		openssl genrsa 2048 > server.key
+		openssl req -new -x509 -nodes -sha1 -days 3650 -key server.key > server.crt
+
+1. Make them read-only and owned by root
+
+		chmod 400 server.key server.crt
+		sudo chown root server.key server.crt
+
+1. Move them to /opt/local/apache2/conf
+
+		sudo mv server.key server.crt /opt/local/apache2/conf
+
+## Apache first start
+
+	sudo port load apache2
+
+## Apache/mysql restart
+
+	sudo port unload apache2 && sudo port load apache2
+	sudo port unload mysql5-server && sudo port load mysql5-server
 
 
 ## log files
