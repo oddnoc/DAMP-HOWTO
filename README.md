@@ -99,6 +99,11 @@ To customize php, copy /opt/local/etc/php5/php.ini-development to
 set a time zone. Search for date.timezone and add a timezone code (example:
 *America/Los_Angeles*)
 
+You may also want to do this:
+
+> To use mysqlnd with a local MySQL server, edit /opt/local/etc/php5/php.ini and set
+> mysql.default_socket, mysqli.default_socket and pdo_mysql.default_socket
+> to /opt/local/var/run/mysql5/mysqld.sock
 
 ## Apache first start
 
@@ -117,6 +122,7 @@ Clear or delete these occasionally; cronolog makes it easier to delete oldies.
 * /opt/local/apache2/logs
 
 ## Version
+* 0.2.01 Added php.ini section.
 * 0.2.0 Added many details and fixes.
 * 0.1.1  Replaced reference to 'bbedit' with '$EDITOR'
 * 0.1 Added TLS support and formatted README as markdown.
