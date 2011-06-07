@@ -5,9 +5,19 @@
 * MySQL
 * PHP
 
+## MacPorts
+
+Get and install the [MacPorts](http://www.macports.org/) distribution appropriate for your version of Mac OS X.
+
+* [MacPorts for Snow Leopard (10.6)](http://distfiles.macports.org/MacPorts/MacPorts-1.9.2-10.6-SnowLeopard.dmg)
+* [MacPorts for Leopard (10.5)](http://distfiles.macports.org/MacPorts/MacPorts-1.9.2-10.5-Leopard.dmg)
+* [MacPorts for Tiger (10.4)](http://distfiles.macports.org/MacPorts/MacPorts-1.9.1-10.4-Tiger.dmg)
+
+Keep your MacPorts up to date by occasionally doing `sudo port -v selfupdate`.
+
 ## Ports
 
-Install the following ports with sudo port install *portname*.
+Install the following ports with `sudo port install` *portname*.
 For php5 itself, the command is:
 
 	sudo port install php5 +apache2 +pear
