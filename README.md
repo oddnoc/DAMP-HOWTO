@@ -23,17 +23,17 @@ For php5 itself, the command is:
 	sudo port install php5 +apache2 +pear
 
 *	cronolog
-*	php5 +apache2 +pear
+*	php5 +apache2 +pear _(lengthy build)_
 *	php5-apc
 *	php5-gd
 *	php5-iconv
 *	php5-mbstring
-*	php5-mcrypt (for phpmyadmin)
+*	php5-mcrypt _(for phpmyadmin)_
 *	php5-posix
 *	php5-tidy
 *	php5-mysql
 *	phpmyadmin
-*	mysql5-server
+*	mysql5-server _(lengthy build)_
 
 ## one-time mysql setup
 
@@ -44,26 +44,51 @@ For php5 itself, the command is:
 
 ## phpmyadmin setup
 
-	cd /opt/local/apache2/htdocs
-	sudo ln -s /opt/local/www/phpmyadmin
-	sudo $EDITOR /opt/local/www/phpmyadmin/config.inc.php # add a blowfish passphrase (can be anything, like glory4meterage)
+1. create a symlink so you can access phpmyadmin
 
-## Apache/mysql restart
+		cd /opt/local/apache2/htdocs
+		sudo ln -s /opt/local/www/phpmyadmin
+1. Set a blowfish passphrase so that cookies work (can be anything, like glory4meterage)
 
-	sudo port unload apache2 && sudo port load apache2
-	sudo port unload mysql5-server && sudo port load mysql5-server
+		sudo $EDITOR /opt/local/www/phpmyadmin/config.inc.php
 
 ## Apache config
 
-* `sudo rm /opt/local/apache2/htdocs/index.html`
-* /opt/local/apache2/conf
-* see diff files
-* create this file as extra/mod_php.conf
+1. `sudo rm /opt/local/apache2/htdocs/index.html`
+2. `cd /opt/local/apache2/conf`
+3. see diff files, which you can apply with `patch -p0` _diff-file-name_
+3. Edit httpd.conf, near line 129, to apply your username and group (suggestion: _staff_)
+4. create this file as extra/mod_php.conf
 
 		<IfModule mod_php5.c>
 		AddType  application/x-httpd-php         .php
 		AddType  application/x-httpd-php-source  .phps
 		</IfModule>
+
+## SSL/TLS key & certificate
+
+1. Generate a self-signed key & certificate
+
+		openssl genrsa 2048 > server.key
+		openssl req -new -x509 -nodes -sha1 -days 3650 -key server.key > server.crt
+
+1. Make them read-only and owned by root
+
+		chmod 400 server.key server.crt
+		sudo chown root server.key server.crt
+
+1. Move them to /opt/local/apache2/conf
+
+		sudo mv server.key server.crt /opt/local/apache2/conf
+
+## Apache first start
+
+	sudo port load apache2
+
+## Apache/mysql restart
+
+	sudo port unload apache2 && sudo port load apache2
+	sudo port unload mysql5-server && sudo port load mysql5-server
 
 
 ## log files
