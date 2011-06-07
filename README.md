@@ -92,6 +92,14 @@ For php5 itself, the command is:
 
 		sudo mv server.key server.crt /opt/local/apache2/conf
 
+## php.ini
+
+To customize php, copy /opt/local/etc/php5/php.ini-development to
+/opt/local/etc/php5/php.ini and then make changes. You'll definitely need to
+set a time zone. Search for date.timezone and add a timezone code (example:
+*America/Los_Angeles*)
+
+
 ## Apache first start
 
 	sudo port load apache2
