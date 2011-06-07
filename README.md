@@ -66,3 +66,4 @@ For php5 itself, the command is:
 
 ## Version
 * 0.1 Added TLS support and formatted README as markdown.
+* 0.1.1  Replaced reference to 'bbedit' with '$EDITOR'
