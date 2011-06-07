@@ -64,6 +64,7 @@ For php5 itself, the command is:
 		AddType  application/x-httpd-php         .php
 		AddType  application/x-httpd-php-source  .phps
 		</IfModule>
+5. _(optional)_ Edit extra/httpd-vhosts.conf (near line 47) to use your own domain.
 
 ## SSL/TLS key & certificate
 
