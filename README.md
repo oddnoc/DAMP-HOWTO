@@ -31,7 +31,7 @@ For php5 itself, the command is:
 	sudo chown _mysql /opt/local/var/db/mysql5
 	sudo mysql_install_db5 # don't set the user as recommended
 
-## Then unload mysql and CHOWN again as above:
+## Then unload mysql and `chown` again as above:
 
 	sudo port unload mysql5-server
 	sudo chown _mysql /opt/local/var/db/mysql5
