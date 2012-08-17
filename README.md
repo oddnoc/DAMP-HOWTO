@@ -18,6 +18,8 @@ have PHPMyAdmin at [http://localhost/phpmyadmin](http://localhost/phpmyadmin).
 
 Get and install the [MacPorts](http://www.macports.org/) distribution appropriate for your version of Mac OS X.
 
+* [MacPorts for Mountain Lion (10.8)](https://distfiles.macports.org/MacPorts/MacPorts-2.1.2-10.8-MountainLion.pkg)
+* [MacPorts for Lion (10.7)](https://distfiles.macports.org/MacPorts/MacPorts-2.1.2-10.7-Lion.pkg)
 * [MacPorts for Snow Leopard (10.6)](http://distfiles.macports.org/MacPorts/MacPorts-1.9.2-10.6-SnowLeopard.dmg)
 * [MacPorts for Leopard (10.5)](http://distfiles.macports.org/MacPorts/MacPorts-1.9.2-10.5-Leopard.dmg)
 * [MacPorts for Tiger (10.4)](http://distfiles.macports.org/MacPorts/MacPorts-1.9.1-10.4-Tiger.dmg)
