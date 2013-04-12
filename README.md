@@ -38,7 +38,7 @@ PHP repository:
 	brew tap josegonzalez/homebrew-php
 
 * cronolog
-* php53 -\-with-mysql -\-with-tidy -\-with-intl -\-with-homebrew-openssl _(lengthy build)_
+* php53 `--with-mysql --with-tidy --with-intl --with-homebrew-openssl` _(lengthy build)_
 * curl-ca-bundle
 * php53-intl
 * mysql _(follow the on-screen directions to launch the server)_
