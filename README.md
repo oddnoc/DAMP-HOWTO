@@ -46,12 +46,18 @@ For php5 itself, the command is:
 *	phpmyadmin
 *	mysql5-server _(lengthy build)_
 
+Here it is as a one-line command:
+
+	sudo port install php5 +apache2 +pear && \
+	sudo port install cronolog php5-apc php5-gd php5-iconv php5-mbstring php5-mcrypt php5-posix php5-tidy php5-mysql phpmyadmin mysql5-server
+
+
 ## one-time mysql setup
 
-	sudo mysql_install_db5
 	sudo chown -R _mysql /opt/local/var/db/mysql5
+	sudo -u _mysql mysql_install_db5
 	sudo port load mysql5-server
-	sudo mysql_secure_installation5
+	sudo -u _mysql mysql_secure_installation5
 
 ## phpmyadmin setup
 
@@ -104,9 +110,9 @@ set a time zone. Search for date.timezone and add a timezone code (example:
 
 You may also want to do this:
 
-> To use mysqlnd with a local MySQL server, edit /opt/local/etc/php5/php.ini and set
-> mysql.default_socket, mysqli.default_socket and pdo_mysql.default_socket
-> to /opt/local/var/run/mysql5/mysqld.sock
+	To use mysqlnd with a local MySQL server, edit /opt/local/etc/php5/php.ini and set
+	mysql.default_socket, mysqli.default_socket and pdo_mysql.default_socket
+	to /opt/local/var/run/mysql5/mysqld.sock
 
 ## Apache first start
 
