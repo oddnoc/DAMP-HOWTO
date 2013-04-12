@@ -14,123 +14,96 @@ applications. Any directory you create under your Sites directory will
 correspond to a site: http://_dirname_.lh.fredcondo.net/. In addition, you'll
 have PHPMyAdmin at [http://localhost/phpmyadmin](http://localhost/phpmyadmin).
 
-## MacPorts
+## Homebrew (package manager)
 
-Get and install the [MacPorts](http://www.macports.org/) distribution appropriate for your version of Mac OS X.
+Get and install the [Homebrew](http://brew.sh/) package manager.
 
-* [MacPorts for Mountain Lion (10.8)](https://distfiles.macports.org/MacPorts/MacPorts-2.1.2-10.8-MountainLion.pkg)
-* [MacPorts for Lion (10.7)](https://distfiles.macports.org/MacPorts/MacPorts-2.1.2-10.7-Lion.pkg)
-* [MacPorts for Snow Leopard (10.6)](http://distfiles.macports.org/MacPorts/MacPorts-1.9.2-10.6-SnowLeopard.dmg)
-* [MacPorts for Leopard (10.5)](http://distfiles.macports.org/MacPorts/MacPorts-1.9.2-10.5-Leopard.dmg)
-* [MacPorts for Tiger (10.4)](http://distfiles.macports.org/MacPorts/MacPorts-1.9.1-10.4-Tiger.dmg)
+	ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
 
-Keep your MacPorts up to date by occasionally doing `sudo port -v selfupdate`.
+Keep your homebrew up to date by occasionally doing `brew update`.
+
+Add bash completion for brew to your .profile:
+
+	source `brew --prefix`/Library/Contributions/brew_bash_completion.sh
 
 ## Ports
 
-Install the following ports with `sudo port install` *portname*.
-For php5 itself, the command is:
+Install the following ports with `brew install` *formula*.
 
-	sudo port install php5 +apache2 +pear
+PHP is maintained separately from the main homebrew formulae. To gain access to
+the [PHP formulae](https://github.com/josegonzalez/homebrew-php), tap into the
+PHP repository:
 
-*	cronolog
-*	php5 +apache2 +pear _(lengthy build)_
-*	php5-apc
-*	php5-gd
-*	php5-iconv
-*	php5-mbstring
-*	php5-mcrypt _(for phpmyadmin)_
-*	php5-posix
-*	php5-tidy
-*	php5-mysql
-*	phpmyadmin
-*	mysql5-server _(lengthy build)_
+	brew tap homebrew/dupes
+	brew tap josegonzalez/homebrew-php
 
-Here it is as a one-line command:
+* cronolog
+* php53 -\-with-mysql -\-with-tidy -\-with-intl -\-with-homebrew-openssl _(lengthy build)_
+* curl-ca-bundle
+* php53-intl
+* mysql _(follow the on-screen directions to launch the server)_
+* php53-apc
+* php53-mcrypt _(for phpmyadmin)_
+* phpmyadmin
 
-	sudo port install php5 +apache2 +pear && \
-	sudo port install cronolog php5-apc php5-gd php5-iconv php5-mbstring php5-mcrypt php5-posix php5-tidy php5-mysql phpmyadmin mysql5-server
+## Enable apache
 
+Create your configuration file:
 
-## one-time mysql setup
+	sudo touch /etc/apache2/users/`whoami`.conf
 
-	sudo chown -R _mysql /opt/local/var/db/mysql5
-	sudo -u _mysql mysql_install_db5
-	sudo port load mysql5-server
-	sudo -u _mysql mysql_secure_installation5
+Edit the file so that it reads as follows, but substitute your username (the output of `whoami`) for "UID":
 
-## phpmyadmin setup
+	LoadModule php5_module    /usr/local/opt/php53/libexec/apache2/libphp5.so
+	LogFormat "%V %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combinedvhost
+	User UID
+	Group UID
+	<Directory "/Users/UID/Sites/">
+		 Options Indexes MultiViews FollowSymLinks
+		 AllowOverride All
+		 Order allow,deny
+		 Allow from all
+	</Directory>
+	<VirtualHost *.lh.fredcondo.net:80>
+		servername *
+		UseCanonicalName off
+		VirtualDocumentRoot /Users/UID/Sites/%1/
+		addDefaultcharset on
+		DirectoryIndex index.php
+		CustomLog "|/usr/local/sbin/cronolog -H /Users/UID/log/access_log /Users/UID/log/%Y/%m/%d/access_log" combinedvhost
+		ErrorLog "|/usr/local/sbin/cronolog -H /Users/UID/log/error_log /Users/UID/log/%Y/%m/%d/error_log"
+	</VirtualHost>
 
-1. create a symlink so you can access phpmyadmin
+	Alias /phpmyadmin /usr/local/share/phpmyadmin
+	<Directory /usr/local/share/phpmyadmin/>
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride All
+		Order allow,deny
+		Allow from all
+	</Directory>
 
-		cd /opt/local/apache2/htdocs
-		sudo ln -s /opt/local/www/phpmyadmin
-1. Set a blowfish passphrase so that cookies work (can be anything, like glory4meterage).
-   You may also need to change "localhost" to "127.0.0.1"
+Make sure you have a log directory:
 
-		sudo $EDITOR /opt/local/www/phpmyadmin/config.inc.php
+	mkdir ~/log
 
-## Apache config
+Then set apache to launch at boot:
 
-1. `sudo rm /opt/local/apache2/htdocs/index.html`
-2. `cd /opt/local/apache2/conf`
-3. see diff files, which you can apply with `patch -p0` _diff-file-name_
-3. Edit httpd.conf, near line 129, to apply your username and group (suggestion: _staff_)
-4. create this file as extra/mod_php.conf
+	sudo defaults write /System/Library/LaunchDaemons/org.apache.httpd Disabled -bool false
 
-		<IfModule mod_php5.c>
-		AddType  application/x-httpd-php         .php
-		AddType  application/x-httpd-php-source  .phps
-		</IfModule>
-5. _(optional)_ Edit extra/httpd-vhosts.conf (near line 47) to use your own domain.
-6. If you get an error on startup about mod\_unique\_id, disable its Load line in httpd.conf
+When you need to start/stop/restart apache, use apachectl with sudo:
 
-## SSL/TLS key & certificate
-
-1. Generate a self-signed key & certificate
-
-		openssl genrsa 2048 > server.key
-		openssl req -new -x509 -nodes -sha1 -days 3650 -key server.key > server.crt
-
-1. Make them read-only and owned by root
-
-		chmod 400 server.key server.crt
-		sudo chown root server.key server.crt
-
-1. Move them to /opt/local/apache2/conf
-
-		sudo mv server.key server.crt /opt/local/apache2/conf
+	sudo apachectl start
+	sudo apachectl stop
+	sudo apachectl restart
 
 ## php.ini
 
-To customize php, copy /opt/local/etc/php5/php.ini-development to
-/opt/local/etc/php5/php.ini and then make changes. You'll definitely need to
+To customize php, edit /usr/local/etc/php/5.3/php.ini. You'll definitely need to
 set a time zone. Search for date.timezone and add a timezone code (example:
 *America/Los_Angeles*)
 
-You may also want to do this:
-
-	To use mysqlnd with a local MySQL server, edit /opt/local/etc/php5/php.ini and set
-	mysql.default_socket, mysqli.default_socket and pdo_mysql.default_socket
-	to /opt/local/var/run/mysql5/mysqld.sock
-
-## Apache first start
-
-	sudo port load apache2
-
-## Apache/mysql restart
-
-	sudo port unload apache2 && sudo port load apache2
-	sudo port unload mysql5-server && sudo port load mysql5-server
-
-
-## log files
-
-Clear or delete these occasionally; cronolog makes it easier to delete oldies.
-
-* /opt/local/apache2/logs
-
 ## Version
+* 1.0.0 Switched from MacPorts to homebrew.
 * 0.2.2 Fixed typo in previous version number. Improved mysql setup.
 * 0.2.1 Added php.ini section.
 * 0.2.0 Added many details and fixes.
