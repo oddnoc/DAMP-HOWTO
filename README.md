@@ -18,6 +18,8 @@ have PHPMyAdmin at [http://localhost/phpmyadmin](http://localhost/phpmyadmin).
 
 Get and install the [MacPorts](http://www.macports.org/) distribution appropriate for your version of Mac OS X.
 
+* [MacPorts for Mountain Lion (10.8)](https://distfiles.macports.org/MacPorts/MacPorts-2.1.2-10.8-MountainLion.pkg)
+* [MacPorts for Lion (10.7)](https://distfiles.macports.org/MacPorts/MacPorts-2.1.2-10.7-Lion.pkg)
 * [MacPorts for Snow Leopard (10.6)](http://distfiles.macports.org/MacPorts/MacPorts-1.9.2-10.6-SnowLeopard.dmg)
 * [MacPorts for Leopard (10.5)](http://distfiles.macports.org/MacPorts/MacPorts-1.9.2-10.5-Leopard.dmg)
 * [MacPorts for Tiger (10.4)](http://distfiles.macports.org/MacPorts/MacPorts-1.9.1-10.4-Tiger.dmg)
@@ -44,12 +46,18 @@ For php5 itself, the command is:
 *	phpmyadmin
 *	mysql5-server _(lengthy build)_
 
+Here it is as a one-line command:
+
+	sudo port install php5 +apache2 +pear && \
+	sudo port install cronolog php5-apc php5-gd php5-iconv php5-mbstring php5-mcrypt php5-posix php5-tidy php5-mysql phpmyadmin mysql5-server
+
+
 ## one-time mysql setup
 
-	sudo mysql_install_db5
 	sudo chown -R _mysql /opt/local/var/db/mysql5
+	sudo -u _mysql mysql_install_db5
 	sudo port load mysql5-server
-	sudo mysql_secure_installation5
+	sudo -u _mysql mysql_secure_installation5
 
 ## phpmyadmin setup
 
@@ -75,6 +83,7 @@ For php5 itself, the command is:
 		AddType  application/x-httpd-php-source  .phps
 		</IfModule>
 5. _(optional)_ Edit extra/httpd-vhosts.conf (near line 47) to use your own domain.
+6. If you get an error on startup about mod\_unique\_id, disable its Load line in httpd.conf
 
 ## SSL/TLS key & certificate
 
@@ -101,9 +110,9 @@ set a time zone. Search for date.timezone and add a timezone code (example:
 
 You may also want to do this:
 
-> To use mysqlnd with a local MySQL server, edit /opt/local/etc/php5/php.ini and set
-> mysql.default_socket, mysqli.default_socket and pdo_mysql.default_socket
-> to /opt/local/var/run/mysql5/mysqld.sock
+	To use mysqlnd with a local MySQL server, edit /opt/local/etc/php5/php.ini and set
+	mysql.default_socket, mysqli.default_socket and pdo_mysql.default_socket
+	to /opt/local/var/run/mysql5/mysqld.sock
 
 ## Apache first start
 
@@ -122,7 +131,7 @@ Clear or delete these occasionally; cronolog makes it easier to delete oldies.
 * /opt/local/apache2/logs
 
 ## Version
-* 0.2.2 Fixed typo in previous version number.
+* 0.2.2 Fixed typo in previous version number. Improved mysql setup.
 * 0.2.1 Added php.ini section.
 * 0.2.0 Added many details and fixes.
 * 0.1.1  Replaced reference to 'bbedit' with '$EDITOR'
