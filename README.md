@@ -11,12 +11,12 @@
 
 You will end up with all the services you need on your Mac to run PHP
 applications. Any directory you create under your Sites directory will
-correspond to a site: http://_dirname_.lh.fredcondo.net/. In addition, you'll
-have PHPMyAdmin at [http://localhost/phpmyadmin](http://localhost/phpmyadmin).
+correspond to a site: http://<var>dirname</var>.lh.fredcondo.net/. In addition,
+you'll have PHPMyAdmin at <http://localhost/phpmyadmin>.
 
 ## Homebrew (package manager)
 
-Get and install the [Homebrew](http://brew.sh/) package manager.
+Get and install the [Homebrew][brew] package manager.
 
 	ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
 
@@ -31,7 +31,7 @@ Add bash completion for brew to your .profile:
 Install the following ports with `brew install` *formula*.
 
 PHP is maintained separately from the main homebrew formulae. To gain access to
-the [PHP formulae](https://github.com/josegonzalez/homebrew-php), tap into the
+the [PHP formulae][github], tap into the
 PHP repository:
 
 	brew tap homebrew/dupes
@@ -109,3 +109,6 @@ set a time zone. Search for date.timezone and add a timezone code (example:
 * 0.2.0 Added many details and fixes.
 * 0.1.1  Replaced reference to 'bbedit' with '$EDITOR'
 * 0.1 Added TLS support and formatted README as markdown.
+
+[brew]: http://brew.sh/
+[github]: https://github.com/josegonzalez/homebrew-php
