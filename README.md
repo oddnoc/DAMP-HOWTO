@@ -1,4 +1,4 @@
-# DAMP for Mac OS X through MacPorts
+# DAMP for Mac OS X through Homebrew
 
 ## What does DAMP stand for?
 
@@ -51,6 +51,7 @@ PHP repository:
 Create your configuration file:
 
 	sudo touch /etc/apache2/users/`whoami`.conf
+	sudo chown `whoami` /etc/apache2/users/`whoami`.conf
 
 Edit the file so that it reads as follows, but substitute your username (the output of `whoami`) for "UID":
 
@@ -103,6 +104,7 @@ set a time zone. Search for date.timezone and add a timezone code (example:
 *America/Los_Angeles*)
 
 ## Version
+* 1.0.1 Minor fixes
 * 1.0.0 Switched from MacPorts to homebrew.
 * 0.2.2 Fixed typo in previous version number. Improved mysql setup.
 * 0.2.1 Added php.ini section.
