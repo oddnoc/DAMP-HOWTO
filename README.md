@@ -11,8 +11,14 @@
 
 You will end up with all the services you need on your Mac to run PHP
 applications. Any directory you create under your Sites directory will
-correspond to a site: http://<var>dirname</var>.lh.fredcondo.net/. In addition,
-you'll have PHPMyAdmin at <http://localhost/phpmyadmin>.
+correspond to a site: http://<var>dirname</var>.lh.fredcondo.net/. (Note that
+this relies on my wildcard DNS address record such that *.lh.fredcondo.net
+resolves to 127.0.0.1.) In addition, you will have PHPMyAdmin at
+<http://localhost/phpmyadmin>.
+
+**Note:** homebrew does not use `sudo`. You may be accustomed to using it all
+the time on your Mac, but in the following instructions, use `sudo` *only when
+it is explicitly mentioned.*
 
 ## Homebrew (package manager)
 
@@ -20,19 +26,22 @@ Get and install the [Homebrew][brew] package manager.
 
 	ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
 
-Keep your homebrew up to date by occasionally doing `brew update`.
+Keep your homebrew up to date by regularly doing `brew update`.
 
 Add bash completion for brew to your .profile:
 
-	source `brew --prefix`/Library/Contributions/brew_bash_completion.sh
+	source `brew --prefix`/etc/bash_completion
+
+If you decide to install the homebrew bash, make it your default shell:
+
+	chsh -s `brew --prefix`/bin/bash
 
 ## Ports
 
 Install the following ports with `brew install` *formula*.
 
 PHP is maintained separately from the main homebrew formulae. To gain access to
-the [PHP formulae][github], tap into the
-PHP repository:
+the [PHP formulae][github], tap into the PHP repository:
 
 	brew tap homebrew/dupes
 	brew tap josegonzalez/homebrew-php
@@ -53,7 +62,8 @@ Create your configuration file:
 	sudo touch /etc/apache2/users/`whoami`.conf
 	sudo chown `whoami` /etc/apache2/users/`whoami`.conf
 
-Edit the file so that it reads as follows, but substitute your username (the output of `whoami`) for "UID":
+Edit the file so that it reads as follows, but substitute your username (the
+output of `whoami`) for "UID":
 
 	LoadModule php5_module    /usr/local/opt/php53/libexec/apache2/libphp5.so
 	LogFormat "%V %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combinedvhost
@@ -99,11 +109,20 @@ When you need to start/stop/restart apache, use apachectl with sudo:
 
 ## php.ini
 
-To customize php, edit /usr/local/etc/php/5.3/php.ini. You'll definitely need to
-set a time zone. Search for date.timezone and add a timezone code (example:
-*America/Los_Angeles*)
+To customize php, edit `$(brew --prefix josegonzalez/php/php53)/php.ini` (the
+formula also provides PHP 5.4, if that is your platform). You'll definitely need
+to set a time zone. Search for date.timezone and add a timezone code (example:
+*America/Los_Angeles*). If you want a separate configuration for the command
+line (CLI) php, copy php.ini to php-cli.ini and edit the latter.
+
+## Add CLI PHP to your path
+
+Add the php CLI command to your path in your `.profile` with this:
+
+	PATH="$(brew --prefix josegonzalez/php/php53)/bin:$PATH"
 
 ## Version
+* 1.1.0 Corrections & expanded explanations
 * 1.0.1 Minor fixes
 * 1.0.0 Switched from MacPorts to homebrew.
 * 0.2.2 Fixed typo in previous version number. Improved mysql setup.
