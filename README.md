@@ -1,4 +1,4 @@
-# DAMP for Mac OS X through Homebrew
+# DAMP for Mac OS X Mountain Lion through Homebrew
 
 ## What does DAMP stand for?
 
@@ -19,6 +19,9 @@ resolves to 127.0.0.1.) In addition, you will have PHPMyAdmin at
 **Note:** homebrew does not use `sudo`. You may be accustomed to using it all
 the time on your Mac, but in the following instructions, use `sudo` *only when
 it is explicitly mentioned.*
+
+**Note:** These instructions were developed on and have been tested on Mountain
+Lion *only.*
 
 ## Homebrew (package manager)
 
@@ -93,6 +96,10 @@ output of `whoami`) for "UID":
 		Allow from all
 	</Directory>
 
+**Note:** you might not have a personal group. You can check this with the
+`groups` shell command. If that's the case, substitute one of your other groups,
+such as admin, in the `Group` directive above.
+
 Make sure you have a log directory:
 
 	mkdir ~/log
@@ -122,6 +129,7 @@ Add the php CLI command to your path in your `.profile` with this:
 	PATH="$(brew --prefix josegonzalez/php/php53)/bin:$PATH"
 
 ## Version
+* 1.1.1 Add notes about Mountain Lion and personal group
 * 1.1.0 Corrections & expanded explanations
 * 1.0.1 Minor fixes
 * 1.0.0 Switched from MacPorts to homebrew.
