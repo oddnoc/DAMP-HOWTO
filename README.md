@@ -129,6 +129,7 @@ Add the php CLI command to your path in your `.profile` with this:
 	PATH="$(brew --prefix josegonzalez/php/php53)/bin:$PATH"
 
 ## Version
+* 1.1.2 Correct php.ini location
 * 1.1.1 Add notes about Mountain Lion and personal group
 * 1.1.0 Corrections & expanded explanations
 * 1.0.1 Minor fixes
