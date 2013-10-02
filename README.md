@@ -116,11 +116,11 @@ When you need to start/stop/restart apache, use apachectl with sudo:
 
 ## php.ini
 
-To customize php, edit `$(brew --prefix josegonzalez/php/php53)/php.ini` (the
-formula also provides PHP 5.4, if that is your platform). You'll definitely need
-to set a time zone. Search for date.timezone and add a timezone code (example:
-*America/Los_Angeles*). If you want a separate configuration for the command
-line (CLI) php, copy php.ini to php-cli.ini and edit the latter.
+To customize php, edit php.ini (you can discover where php.ini is by doing `php --ini`
+on the command line). You'll definitely need to set a time zone. Search for
+date.timezone and add a timezone code (example: *America/Los_Angeles*). If you
+want a separate configuration for the command line (CLI) php, copy php.ini to
+php-cli.ini and edit the latter.
 
 ## Add CLI PHP to your path
 
