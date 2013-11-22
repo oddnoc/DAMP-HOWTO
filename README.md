@@ -21,7 +21,9 @@ the time on your Mac, but in the following instructions, use `sudo` *only when
 it is explicitly mentioned.*
 
 **Note:** These instructions were developed on and have been tested on Mountain
-Lion *only.*
+Lion with PHP 5.3, and everything still worked after upgrading to Mavericks and
+heeding the [upgrade advice][mavad] from the Homebrew-PHP project, then
+switching to PHP 5.4.
 
 ## Homebrew (package manager)
 
@@ -50,12 +52,13 @@ the [PHP formulae][github], tap into the PHP repository:
 	brew tap josegonzalez/homebrew-php
 
 * cronolog
-* php53 `--with-mysql --with-tidy --with-intl --with-homebrew-openssl` _(lengthy build)_
 * curl-ca-bundle
-* php53-intl
+* php54 `--with-mysql --with-homebrew-openssl` _(lengthy build)_
+* php54-intl
+* php54-apc
+* php54-mcrypt _(for phpmyadmin)_
+* php54-xdebug
 * mysql _(follow the on-screen directions to launch the server)_
-* php53-apc
-* php53-mcrypt _(for phpmyadmin)_
 * phpmyadmin
 
 ## Enable apache
@@ -66,9 +69,10 @@ Create your configuration file:
 	sudo chown `whoami` /etc/apache2/users/`whoami`.conf
 
 Edit the file so that it reads as follows, but substitute your username (the
-output of `whoami`) for "UID":
+output of `whoami`) for "UID" (and you'll have to adjust the "5.4.22" to
+reflect the actual version of PHP):
 
-	LoadModule php5_module    /usr/local/opt/php53/libexec/apache2/libphp5.so
+	LoadModule php5_module    /usr/local/Cellar/php54/5.4.22/libexec/apache2/libphp5.so
 	LogFormat "%V %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combinedvhost
 	User UID
 	Group UID
@@ -126,7 +130,7 @@ php-cli.ini and edit the latter.
 
 Add the php CLI command to your path in your `.profile` with this:
 
-	PATH="$(brew --prefix josegonzalez/php/php53)/bin:$PATH"
+	PATH="$(brew --prefix josegonzalez/php/php54)/bin:$PATH"
 
 ## Version
 * 1.1.2 Correct php.ini location
@@ -142,3 +146,4 @@ Add the php CLI command to your path in your `.profile` with this:
 
 [brew]: http://brew.sh/
 [github]: https://github.com/josegonzalez/homebrew-php
+[mavad]: https://github.com/josegonzalez/homebrew-php#common-upgrade-issues
