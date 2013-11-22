@@ -152,6 +152,7 @@ PATH="$(brew --prefix josegonzalez/php/php54)/bin:$PATH"
 ```
 
 ## Version
+* 1.2.0 Mavericks & PHP 5.4
 * 1.1.2 Correct php.ini location
 * 1.1.1 Add notes about Mountain Lion and personal group
 * 1.1.0 Corrections & expanded explanations
