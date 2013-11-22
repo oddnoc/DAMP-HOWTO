@@ -1,4 +1,4 @@
-# DAMP for Mac OS X Mountain Lion through Homebrew
+# DAMP for Mac OS X Mountain Lion or Mavericks through Homebrew
 
 ## What does DAMP stand for?
 
@@ -29,17 +29,23 @@ switching to PHP 5.4.
 
 Get and install the [Homebrew][brew] package manager.
 
-	ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+```shell
+ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+```
 
 Keep your homebrew up to date by regularly doing `brew update`.
 
 Add bash completion for brew to your .profile:
 
-	source `brew --prefix`/etc/bash_completion
+```shell
+source `brew --prefix`/etc/bash_completion
+```
 
 If you decide to install the homebrew bash, make it your default shell:
 
-	chsh -s `brew --prefix`/bin/bash
+```shell
+chsh -s `brew --prefix`/bin/bash
+```
 
 ## Ports
 
@@ -48,8 +54,10 @@ Install the following ports with `brew install` *formula*.
 PHP is maintained separately from the main homebrew formulae. To gain access to
 the [PHP formulae][github], tap into the PHP repository:
 
-	brew tap homebrew/dupes
-	brew tap josegonzalez/homebrew-php
+```shell
+brew tap homebrew/dupes
+brew tap josegonzalez/homebrew-php
+```
 
 * cronolog
 * curl-ca-bundle
@@ -65,40 +73,44 @@ the [PHP formulae][github], tap into the PHP repository:
 
 Create your configuration file:
 
-	sudo touch /etc/apache2/users/`whoami`.conf
-	sudo chown `whoami` /etc/apache2/users/`whoami`.conf
+```shell
+sudo touch /etc/apache2/users/`whoami`.conf
+sudo chown `whoami` /etc/apache2/users/`whoami`.conf
+```
 
 Edit the file so that it reads as follows, but substitute your username (the
 output of `whoami`) for "UID" (and you'll have to adjust the "5.4.22" to
 reflect the actual version of PHP):
 
-	LoadModule php5_module    /usr/local/Cellar/php54/5.4.22/libexec/apache2/libphp5.so
-	LogFormat "%V %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combinedvhost
-	User UID
-	Group UID
-	<Directory "/Users/UID/Sites/">
-		 Options Indexes MultiViews FollowSymLinks
-		 AllowOverride All
-		 Order allow,deny
-		 Allow from all
-	</Directory>
-	<VirtualHost *.lh.fredcondo.net:80>
-		servername *
-		UseCanonicalName off
-		VirtualDocumentRoot /Users/UID/Sites/%1/
-		addDefaultcharset on
-		DirectoryIndex index.php
-		CustomLog "|/usr/local/sbin/cronolog -H /Users/UID/log/access_log /Users/UID/log/%Y/%m/%d/access_log" combinedvhost
-		ErrorLog "|/usr/local/sbin/cronolog -H /Users/UID/log/error_log /Users/UID/log/%Y/%m/%d/error_log"
-	</VirtualHost>
+```apacheconf
+LoadModule php5_module    /usr/local/Cellar/php54/5.4.22/libexec/apache2/libphp5.so
+LogFormat "%V %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combinedvhost
+User UID
+Group UID
+<Directory "/Users/UID/Sites/">
+	 Options Indexes MultiViews FollowSymLinks
+	 AllowOverride All
+	 Order allow,deny
+	 Allow from all
+</Directory>
+<VirtualHost *.lh.fredcondo.net:80>
+	servername *
+	UseCanonicalName off
+	VirtualDocumentRoot /Users/UID/Sites/%1/
+	addDefaultcharset on
+	DirectoryIndex index.php
+	CustomLog "|/usr/local/sbin/cronolog -H /Users/UID/log/access_log /Users/UID/log/%Y/%m/%d/access_log" combinedvhost
+	ErrorLog "|/usr/local/sbin/cronolog -H /Users/UID/log/error_log /Users/UID/log/%Y/%m/%d/error_log"
+</VirtualHost>
 
-	Alias /phpmyadmin /usr/local/share/phpmyadmin
-	<Directory /usr/local/share/phpmyadmin/>
-		Options Indexes FollowSymLinks MultiViews
-		AllowOverride All
-		Order allow,deny
-		Allow from all
-	</Directory>
+Alias /phpmyadmin /usr/local/share/phpmyadmin
+<Directory /usr/local/share/phpmyadmin/>
+	Options Indexes FollowSymLinks MultiViews
+	AllowOverride All
+	Order allow,deny
+	Allow from all
+</Directory>
+```
 
 **Note:** you might not have a personal group. You can check this with the
 `groups` shell command. If that's the case, substitute one of your other groups,
@@ -106,17 +118,22 @@ such as admin, in the `Group` directive above.
 
 Make sure you have a log directory:
 
-	mkdir ~/log
-
+```shell
+mkdir ~/log
+```
 Then set apache to launch at boot:
 
-	sudo defaults write /System/Library/LaunchDaemons/org.apache.httpd Disabled -bool false
+```shell
+sudo defaults write /System/Library/LaunchDaemons/org.apache.httpd Disabled -bool false
+```
 
 When you need to start/stop/restart apache, use apachectl with sudo:
 
-	sudo apachectl start
-	sudo apachectl stop
-	sudo apachectl restart
+```shell
+sudo apachectl start
+sudo apachectl stop
+sudo apachectl restart
+```
 
 ## php.ini
 
@@ -130,7 +147,9 @@ php-cli.ini and edit the latter.
 
 Add the php CLI command to your path in your `.profile` with this:
 
-	PATH="$(brew --prefix josegonzalez/php/php54)/bin:$PATH"
+```shell
+PATH="$(brew --prefix josegonzalez/php/php54)/bin:$PATH"
+```
 
 ## Version
 * 1.1.2 Correct php.ini location
