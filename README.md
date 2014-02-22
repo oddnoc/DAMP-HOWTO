@@ -63,7 +63,7 @@ brew tap josegonzalez/homebrew-php
 * curl-ca-bundle
 * php54 `--with-mysql --with-homebrew-openssl` _(lengthy build)_
 * php54-intl
-* php54-apc
+* php54-opcache
 * php54-mcrypt _(for phpmyadmin)_
 * php54-xdebug
 * mysql _(follow the on-screen directions to launch the server)_
