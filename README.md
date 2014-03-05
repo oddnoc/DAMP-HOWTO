@@ -69,6 +69,10 @@ brew tap josegonzalez/homebrew-php
 * mysql _(follow the on-screen directions to launch the server)_
 * phpmyadmin
 
+**Note:** wherever php54 is mentioned, you can substitute the version
+you want, such as php55. You can install multiple versions if you follow
+[the directions][phpmult].
+
 ## Enable apache
 
 Create your configuration file:
@@ -167,3 +171,4 @@ PATH="$(brew --prefix josegonzalez/php/php54)/bin:$PATH"
 [brew]: http://brew.sh/
 [github]: https://github.com/josegonzalez/homebrew-php
 [mavad]: https://github.com/josegonzalez/homebrew-php#common-upgrade-issues
+[phpmult]: https://github.com/josegonzalez/homebrew-php/#installing-multiple-versions
