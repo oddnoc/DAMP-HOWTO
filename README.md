@@ -9,21 +9,11 @@
 
 ## Result of executing these instructions
 
-You will end up with all the services you need on your Mac to run PHP
-applications. Any directory you create under your Sites directory will
-correspond to a site: http://<var>dirname</var>.lh.fredcondo.net/. (Note that
-this relies on my wildcard DNS address record such that *.lh.fredcondo.net
-resolves to 127.0.0.1.) In addition, you will have PHPMyAdmin at
-<http://localhost/phpmyadmin>.
+You will end up with all the services you need on your Mac to run PHP applications. Any directory you create under your Sites directory will correspond to a site: http://<var>dirname</var>.lh.fredcondo.net/. (Note that this relies on my wildcard DNS address record such that *.lh.fredcondo.net resolves to 127.0.0.1.) In addition, you will have PHPMyAdmin at <http://localhost/phpmyadmin>.
 
-**Note:** homebrew does not use `sudo`. You may be accustomed to using it all
-the time on your Mac, but in the following instructions, use `sudo` *only when
-it is explicitly mentioned.*
+**Note:** homebrew does not use `sudo`. You may be accustomed to using it all the time on your Mac, but in the following instructions, use `sudo` *only when it is explicitly mentioned.*
 
-**Note:** These instructions were developed on and have been tested on Mountain
-Lion with PHP 5.3, and everything still worked after upgrading to Mavericks and
-heeding the [upgrade advice][mavad] from the Homebrew-PHP project, then
-switching to PHP 5.4.
+**Note:** These instructions were developed on and have been tested on Mountain Lion with PHP 5.3, and everything still worked after upgrading to Mavericks and heeding the [upgrade advice][mavad] from the Homebrew-PHP project, then switching to PHP 5.4.
 
 ## Homebrew (package manager)
 
@@ -51,8 +41,7 @@ chsh -s `brew --prefix`/bin/bash
 
 Install the following ports with `brew install` *formula*.
 
-PHP is maintained separately from the main homebrew formulae. To gain access to
-the [PHP formulae][github], tap into the PHP repository:
+PHP is maintained separately from the main homebrew formulae. To gain access to the [PHP formulae][github], tap into the PHP repository:
 
 ```shell
 brew tap homebrew/dupes
@@ -69,9 +58,7 @@ brew tap josegonzalez/homebrew-php
 * mysql _(follow the on-screen directions to launch the server)_
 * phpmyadmin
 
-**Note:** wherever php54 is mentioned, you can substitute the version
-you want, such as php55. You can install multiple versions if you follow
-[the directions][phpmult].
+**Note:** wherever php54 is mentioned, you can substitute the version you want, such as php55. You can install multiple versions if you follow [the directions][phpmult].
 
 ## Enable apache
 
@@ -82,9 +69,7 @@ sudo touch /etc/apache2/users/`whoami`.conf
 sudo chown `whoami` /etc/apache2/users/`whoami`.conf
 ```
 
-Edit the file so that it reads as follows, but substitute your username (the
-output of `whoami`) for "UID" (and you'll have to adjust the "5.4.22" to
-reflect the actual version of PHP):
+Edit the file so that it reads as follows, but substitute your username (the output of `whoami`) for "UID" (and you'll have to adjust the "5.4.22" to reflect the actual version of PHP):
 
 ```apacheconf
 LoadModule php5_module    /usr/local/Cellar/php54/5.4.22/libexec/apache2/libphp5.so
@@ -116,9 +101,7 @@ Alias /phpmyadmin /usr/local/share/phpmyadmin
 </Directory>
 ```
 
-**Note:** you might not have a personal group. You can check this with the
-`groups` shell command. If that's the case, substitute one of your other groups,
-such as admin, in the `Group` directive above.
+**Note:** you might not have a personal group. You can check this with the `groups` shell command. If that's the case, substitute one of your other groups, such as admin, in the `Group` directive above.
 
 Make sure you have a log directory:
 
@@ -141,11 +124,7 @@ sudo apachectl restart
 
 ## php.ini
 
-To customize php, edit php.ini (you can discover where php.ini is by doing `php --ini`
-on the command line). You'll definitely need to set a time zone. Search for
-date.timezone and add a timezone code (example: *America/Los_Angeles*). If you
-want a separate configuration for the command line (CLI) php, copy php.ini to
-php-cli.ini and edit the latter.
+To customize php, edit php.ini (you can discover where php.ini is by doing `php --ini` on the command line). You'll definitely need to set a time zone. Search for date.timezone and add a timezone code (example: *America/Los_Angeles*). If you want a separate configuration for the command line (CLI) php, copy php.ini to php-cli.ini and edit the latter.
 
 ## Add CLI PHP to your path
 
